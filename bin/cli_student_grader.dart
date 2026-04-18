@@ -155,3 +155,31 @@ void addBonus(List<Map<String, dynamic>> students) {
     print("Bonus already exists for ${student["name"]}!");
   }
 }
+
+// 6. Add Comment — Option 4
+void addComment(List<Map<String, dynamic>> students) {
+  if (students.isEmpty) {
+    print("No students available!");
+    return;
+  }
+
+  print("Select a student:");
+  for (int i = 0; i < students.length; i++) {
+    print("${i + 1}. ${students[i]["name"]}");
+  }
+
+  stdout.write("Enter number: ");
+  int index = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? -1;
+  if (index < 1 || index > students.length) {
+    print("Invalid selection!");
+    return;
+  }
+
+  var student = students[index - 1];
+
+  stdout.write("Enter comment: ");
+  String? comment = stdin.readLineSync();
+
+  student["comment"] = comment?.trim();
+  print("Comment added to ${student["name"]} successfully!");
+}
