@@ -118,3 +118,40 @@ void recordScore(List<Map<String, dynamic>> students, Set<String> subjects) {
   (student["scores"] as List<int>).add(score);
   print("Score $score added to ${student["name"]} successfully!");
 }
+
+// 5. Add Bonus Points — Option 3
+void addBonus(List<Map<String, dynamic>> students) {
+  if (students.isEmpty) {
+    print("No students available!");
+    return;
+  }
+
+  print("Select a student:");
+  for (int i = 0; i < students.length; i++) {
+    print("${i + 1}. ${students[i]["name"]}");
+  }
+
+  stdout.write("Enter number: ");
+  int index = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? -1;
+  if (index < 1 || index > students.length) {
+    print("Invalid selection!");
+    return;
+  }
+
+  var student = students[index - 1];
+
+  stdout.write("Enter bonus points (1–10): ");
+  int bonusValue = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? 0;
+
+  if (bonusValue < 1 || bonusValue > 10) {
+    print("Invalid bonus value!");
+    return;
+  }
+
+  if (student["bonus"] == null) {
+    student["bonus"] = bonusValue;
+    print("Bonus of $bonusValue added to ${student["name"]} successfully!");
+  } else {
+    print("Bonus already exists for ${student["name"]}!");
+  }
+}
