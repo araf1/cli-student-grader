@@ -34,6 +34,30 @@ void main() {
         addStudent(students, availableSubjects);
         break;
 
+      case 2:
+        recordScore(students, availableSubjects);
+        break;
+
+      case 3:
+        addBonus(students);
+        break;
+
+      case 4:
+        addComment(students);
+        break;
+
+      case 5:
+        viewAllStudents(students);
+        break;
+
+      case 6:
+        viewReportCard(students);
+        break;
+
+      case 7:
+        classSummary(students);
+        break;
+
       case 8:
         print("Exiting program...");
         isRunning = false;
