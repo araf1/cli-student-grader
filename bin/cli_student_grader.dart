@@ -203,3 +203,86 @@ void viewAllStudents(List<Map<String, dynamic>> students) {
     print(tags.join(" | "));
   }
 }
+
+// 8. View Report Card — Option 6
+void viewReportCard(List<Map<String, dynamic>> students) {
+  if (students.isEmpty) {
+    print("No students available!");
+    return;
+  }
+
+  print("Select a student:");
+  for (int i = 0; i < students.length; i++) {
+    print("${i + 1}. ${students[i]["name"]}");
+  }
+
+  stdout.write("Enter number: ");
+  int index = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? -1;
+  if (index < 1 || index > students.length) {
+    print("Invalid selection!");
+    return;
+  }
+
+  var student = students[index - 1];
+  List<int> scores = List<int>.from(student["scores"]);
+
+  if (scores.isEmpty) {
+    print("No scores recorded for ${student["name"]}!");
+    return;
+  }
+
+  // Calculate sum
+  int sum = 0;
+  for (int i = 0; i < scores.length; i++) {
+    sum += scores[i];
+  }
+
+  double rawAvg = sum / scores.length;
+
+  // Add bonus using ??
+  int bonus = student["bonus"] ?? 0;
+  double finalAvg = rawAvg + bonus;
+
+  // Cap at 100
+  if (finalAvg > 100) finalAvg = 100;
+
+  // Grade calculation
+  String grade;
+  if (finalAvg >= 90) {
+    grade = "A";
+  } else if (finalAvg >= 80) {
+    grade = "B";
+  } else if (finalAvg >= 70) {
+    grade = "C";
+  } else if (finalAvg >= 60) {
+    grade = "D";
+  } else {
+    grade = "F";
+  }
+
+  // Comment with ?. and ??
+  String comment = student["comment"]?.toUpperCase() ?? "No comment provided";
+
+  // Feedback using switch expression
+  String feedback = switch (grade) {
+    "A" => "Outstanding performance!",
+    "B" => "Good work, keep it up!",
+    "C" => "Satisfactory. Room to improve.",
+    "D" => "Needs improvement.",
+    "F" => "Failing. Please seek help.",
+    _ => "Unknown grade.",
+  };
+
+  print("""
+╔══════════════════════════════╗
+║         REPORT CARD          ║
+╠══════════════════════════════╣
+║  Name:     ${student["name"]}
+║  Scores:   $scores
+║  Bonus:    +$bonus
+║  Average:  ${finalAvg.toStringAsFixed(1)}
+║  Grade:    $grade
+║  Comment:  $comment
+║  Feedback: $feedback
+╚══════════════════════════════╝""");
+}
