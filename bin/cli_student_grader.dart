@@ -111,7 +111,7 @@ void recordScore(List<Map<String, dynamic>> students, Set<String> subjects) {
     print("${i + 1}. ${students[i]["name"]}");
   }
 
-  stdout.write("Enter number: ");
+  stdout.write("Enter Score: ");
   int index = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? -1;
   if (index < 1 || index > students.length) {
     print("Invalid selection!");
@@ -155,7 +155,7 @@ void addBonus(List<Map<String, dynamic>> students) {
     print("${i + 1}. ${students[i]["name"]}");
   }
 
-  stdout.write("Enter number: ");
+  stdout.write("Bonus number: ");
   int index = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? -1;
   if (index < 1 || index > students.length) {
     print("Invalid selection!");
@@ -192,7 +192,7 @@ void addComment(List<Map<String, dynamic>> students) {
     print("${i + 1}. ${students[i]["name"]}");
   }
 
-  stdout.write("Enter number: ");
+  stdout.write("Comment: ");
   int index = int.tryParse((stdin.readLineSync() ?? "").trim()) ?? -1;
   if (index < 1 || index > students.length) {
     print("Invalid selection!");
