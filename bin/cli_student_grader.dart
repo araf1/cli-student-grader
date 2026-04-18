@@ -286,3 +286,85 @@ void viewReportCard(List<Map<String, dynamic>> students) {
 ║  Feedback: $feedback
 ╚══════════════════════════════╝""");
 }
+
+// 9. Class Summary — Option 7
+void classSummary(List<Map<String, dynamic>> students) {
+  if (students.isEmpty) {
+    print("No students available!");
+    return;
+  }
+
+  int totalStudents = students.length;
+  double totalAvg = 0;
+  double highest = 0;
+  double lowest = 100;
+  int counted = 0;
+  int passCount = 0;
+
+  Set<String> uniqueGrades = {};
+
+  // Helper to calculate average
+  double calculateAvg(Map<String, dynamic> student) {
+    List<int> scores = List<int>.from(student["scores"]);
+    if (scores.isEmpty) return 0;
+
+    int sum = 0;
+    for (var s in scores) {
+      sum += s;
+    }
+
+    double avg = sum / scores.length;
+    avg += (student["bonus"] ?? 0);
+    if (avg > 100) avg = 100;
+    return avg;
+  }
+
+  for (var student in students) {
+    double avg = calculateAvg(student);
+
+    if ((student["scores"] as List).isNotEmpty) {
+      totalAvg += avg;
+      counted++;
+
+      if (avg >= 60) passCount++;
+
+      if (avg > highest) highest = avg;
+      if (avg < lowest) lowest = avg;
+
+      String grade;
+      if (avg >= 90) {
+        grade = "A";
+      } else if (avg >= 80) {
+        grade = "B";
+      } else if (avg >= 70) {
+        grade = "C";
+      } else if (avg >= 60) {
+        grade = "D";
+      } else {
+        grade = "F";
+      }
+
+      uniqueGrades.add(grade);
+    }
+  }
+
+  double classAvg = counted > 0 ? totalAvg / counted : 0;
+
+  // Collection for
+  var summaryLines = [
+    for (var s in students)
+      "  ${s["name"]}: ${calculateAvg(s).toStringAsFixed(1)}",
+  ];
+
+  print("\n=== Class Summary ===");
+  print("Total Students  : $totalStudents");
+  print("Class Average   : ${classAvg.toStringAsFixed(1)}");
+  print("Highest Average : ${highest.toStringAsFixed(1)}");
+  print("Lowest Average  : ${lowest.toStringAsFixed(1)}");
+  print("Passing Students: $passCount / $counted");
+  print("\nStudent Averages:");
+  for (var line in summaryLines) {
+    print(line);
+  }
+  print("\nUnique Grades: $uniqueGrades");
+}
