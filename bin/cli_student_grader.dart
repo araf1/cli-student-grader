@@ -183,3 +183,23 @@ void addComment(List<Map<String, dynamic>> students) {
   student["comment"] = comment?.trim();
   print("Comment added to ${student["name"]} successfully!");
 }
+
+// 7. View All Students — Option 5
+void viewAllStudents(List<Map<String, dynamic>> students) {
+  if (students.isEmpty) {
+    print("No students available!");
+    return;
+  }
+
+  print("\n=== All Students ===");
+
+  for (var student in students) {
+    var tags = [
+      student["name"],
+      "${(student["scores"] as List).length} scores",
+      if (student["bonus"] != null) "⭐ Has Bonus",
+    ];
+
+    print(tags.join(" | "));
+  }
+}
